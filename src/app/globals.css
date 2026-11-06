@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b1512;
+  --color-ink-2: #101e18;
+  --color-parchment: #f4efe3;
+  --color-parchment-2: #ebe3d4;
+  --color-gold: #c8a262;
+  --color-gold-2: #e0c99e;
+  --color-sage: #9aae9d;
+  --color-clay: #a86d51;
+
+  --font-sans: var(--font-manrope), var(--font-plex-arabic), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display: var(--font-cormorant), var(--font-amiri), Georgia,
+    "Times New Roman", serif;
+  --font-arabic: var(--font-amiri), "Amiri", "Noto Naskh Arabic", serif;
+}
+
+@layer base {
+  * {
+    border-color: color-mix(in srgb, var(--color-ink) 12%, transparent);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-parchment);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold) 52%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---- Arabic / RTL typography -------------------------------------------- */
+
+html[lang="ar"] {
+  --font-sans: var(--font-plex-arabic), "IBM Plex Sans Arabic", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display: var(--font-amiri), "Amiri", "Noto Naskh Arabic", serif;
+  --font-arabic: var(--font-amiri), "Amiri", "Noto Naskh Arabic", serif;
+}
+
+html[lang="ar"] :where(h1, h2, h3, h4, p, span, a, button, li, label) {
+  letter-spacing: 0;
+}
+
+html[lang="ar"] h1 {
+  line-height: 1.18;
+}
+
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  line-height: 1.3;
+}
+
+/* Arabic strokes thin out more than Latin at the same weight. */
+html[lang="ar"] .font-light {
+  font-weight: 400;
+}
+
+html[lang="ar"] .italic {
+  font-style: normal;
+}
+
+html[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
